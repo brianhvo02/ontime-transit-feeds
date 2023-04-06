@@ -1,6 +1,7 @@
 name: Download feed, export to SQLite3, upload as release
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 12 * * *"
 
@@ -46,6 +47,7 @@ jobs:
           cp ./index.html ./_site
           cp -r ./feeds ./_site
           cp -r ./checksums ./_site
+          cp -r ./geojson ./_site
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
