@@ -47,6 +47,7 @@ jobs:
         run: |
           mkdir ./_site
           cp ./index.html ./_site
+          cp ./agencies.json ./_site
           cp -r ./feeds ./_site
           cp -r ./hashes ./_site
           cp -r ./geojson ./_site

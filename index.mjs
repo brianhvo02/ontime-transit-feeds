@@ -5,8 +5,9 @@ import { execSync } from 'node:child_process';
 
 await mkdir('./feeds', { recursive: true });
 await mkdir('./hashes', { recursive: true });
-const agencies = await fetch('https://api.511.org/transit/gtfsoperators?api_key=' + process.env.KEY)
-    .then(res => res.json());
+const agenciesRaw = await fetch('https://api.511.org/transit/gtfsoperators?api_key=' + process.env.KEY)
+    .then(res => res.text());
+const agencies = JSON.parse(agenciesRaw);
 
 const anchors = [];
 for (let i = 0; i < agencies.length; i++) {
@@ -36,7 +37,8 @@ for (let i = 0; i < agencies.length; i++) {
 
     anchors.push(`<li><a href="./feeds/${agency['Id']}.db">${agency['Id']}.db</a> - <a href="./geojson/${agency['Id']}/${agency['Id']}.geojson">GeoJSON</a> (<a href="./hashes/${agency['Id']}.hash">Hash</a>)</li>`);
 }
-writeFile('./index.html', `<!DOCTYPE html>
+
+await writeFile('./index.html', `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,9 +47,12 @@ writeFile('./index.html', `<!DOCTYPE html>
     <title>OnTime Transit Feeds</title>
 </head>
 <body>
+    <a href="./agencies.json">agencies.json</a>
     <ul>
         ${anchors.join('\n\t\t\t')}
     </ul>
     
 </body>
 </html>`);
+
+await writeFile('agencies.json', agenciesRaw);
