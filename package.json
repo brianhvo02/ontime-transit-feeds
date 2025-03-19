@@ -4,14 +4,14 @@
   "description": "This repository houses 511 SF Bay's GTFS feeds in SQLite3 database files using node-GTFS.",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "start": "node index.mjs",
     "geojson": "gtfs-to-geojson --skipImport"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gtfs": "^4.1.0",
-    "gtfs-to-geojson": "^3.4.0"
+    "gtfs": "^4.15.15",
+    "gtfs-to-geojson": "^3.7.10"
   }
 }

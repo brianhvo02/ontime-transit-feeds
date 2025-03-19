@@ -37,6 +37,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build
+        env:
+          KEY: ${{ secrets.KEY }}
         run: |
           npm install
           npm start
@@ -46,7 +48,7 @@ jobs:
           mkdir ./_site
           cp ./index.html ./_site
           cp -r ./feeds ./_site
-          cp -r ./checksums ./_site
+          cp -r ./hashes ./_site
           cp -r ./geojson ./_site
           
       - name: Upload artifact
